@@ -1,11 +1,10 @@
-const transform = async function* (source, code, cb) {
-  let data = [];
-  for await (const chunk of source ) {
-    console.log(chunk.toUpperCase())
-    data.push(chunk.toUpperCase())
-  }
+const { Transform } = require("stream");
 
-  cb(null, data)
-}
+exports.createCaesarsCipherTransformer = (action, shift) =>
+  new Transform({
+    transform(chunk, encoding, callback) {
+      const inputString = chunk.toString().toUpperCase();
 
-exports.transform = transform;
+      callback(null, inputString);
+    }
+  })
